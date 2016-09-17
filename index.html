@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cellular Automata</title>
+    <style>
+        .row {
+            height: 7px;
+            width: 700px;
+        }
+        
+        .cell {
+            display: inline-block;
+            height: 5px;
+            margin: 1px;
+            width: 5px;
+        }
+        
+        .blue {
+            background: #0099ff;
+        }
+        
+        .grey {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const randomInt = (max = 10, min = 0) => {
+            return Math.floor(
+                Math.random() * (max - min + 1) + min
+            )
+        }
+
+        for (let i = 0; i < 99; i++) {
+            const row = document.createElement('div')
+            row.classList.add('row')
+
+            for (let i = 0; i < 99; i++) {
+                const cell = document.createElement('div')
+                cell.classList.add('cell', randomInt(1) ? 'blue' : 'grey')
+                row.appendChild(cell)
+            }
+
+            document.body.appendChild(row)
+        }
+    </script>
+</body>
+
+</html>
