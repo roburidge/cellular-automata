@@ -6,47 +6,85 @@
     <title>Cellular Automata</title>
     <style>
         .row {
-            height: 7px;
-            width: 700px;
+            font-size: 0;
         }
         
         .cell {
             display: inline-block;
-            height: 5px;
-            margin: 1px;
-            width: 5px;
+            height: 10px;
+            margin: 0 1px 1px 0;
+            width: 10px;
         }
         
-        .blue {
+        .active {
             background: #0099ff;
         }
         
-        .grey {
-            background: #eee;
+        .inactive {
+            background: #ccc;
         }
     </style>
 </head>
 
 <body>
     <script>
+        // random number function
         const randomInt = (max = 10, min = 0) => {
             return Math.floor(
                 Math.random() * (max - min + 1) + min
             )
         }
 
-        for (let i = 0; i < 99; i++) {
-            const row = document.createElement('div')
-            row.classList.add('row')
+        const createTable = () => {
+            // state
+            const table = []
+            const row = []
 
-            for (let i = 0; i < 99; i++) {
-                const cell = document.createElement('div')
-                cell.classList.add('cell', randomInt(1) ? 'blue' : 'grey')
-                row.appendChild(cell)
+            // create random seed
+            for (let i = 0; i < 20; i++) {
+                row.push(randomInt(1))
             }
-
-            document.body.appendChild(row)
+            table.push(row)
+            return table
         }
+
+        // update state
+        const newRow = (oldState) => {
+            const newRow = []
+            return newRow
+        }
+
+        // render state
+        const render = () => {
+            console.table(state)
+        }
+
+        const state = createTable()
+
+        let timer
+        const ticker = () => {
+            state.push(newRow(state))
+            render()
+            timer = setTimeout(ticker, 500)
+        }
+
+        render()
+        ticker()
+
+        // stop this nonsence
+        setTimeout(() => clearTimeout(timer), 2000)
+
+
+        // const row = document.createElement('div')
+        // row.classList.add('row')
+
+        // for (let i = 0; i < 99; i++) {
+        //     const cell = document.createElement('div')
+        //     cell.classList.add('cell', randomInt(1) ? 'active' : 'inactive')
+        //     row.appendChild(cell)
+        // }
+
+        // document.body.appendChild(row)
     </script>
 </body>
 
