@@ -7,14 +7,14 @@
     <style>
         .row {
             font-size: 0;
-            width: 800px;
+            width: 495px;
         }
         
         .cell {
             display: inline-block;
-            height: 2px;
+            height: 5px;
             /*margin: 0 1px 1px 0;*/
-            width: 2px;
+            width: 5px;
         }
         
         .active {
@@ -29,6 +29,17 @@
 
 <body>
     <script>
+        const _rule = [
+            [[1,1,1], 0],
+            [[1,1,0], 0],
+            [[1,0,1], 0],
+            [[1,0,0], 0],
+            [[0,1,1], 0],
+            [[0,1,0], 0],
+            [[0,0,1], 0],
+            [[0,0,0], 1],
+        ]
+
         const randomInt = (max = 10, min = 0) => {
             return Math.floor(
                 Math.random() * (max - min + 1) + min
@@ -50,37 +61,27 @@
         }
 
         const nextGenValue = (siblingLeft = 0, prevValue, siblingRight = 0) => {
-            const tests = [
-                [[1,1,1], 1],
-                [[1,1,0], 1],
-                [[1,0,1], 1],
-                [[1,0,0], 0],
-                [[0,1,1], 0],
-                [[0,1,0], 0],
-                [[0,0,1], 0],
-                [[0,0,0], 1]
-            ]
+
             const current = [siblingLeft, prevValue, siblingRight]
 
-            let newValue
-
-            tests.forEach((value) => {
-                if (value[0][0] === siblingLeft &&
-                    value[0][1] === prevValue &&
-                    value[0][2] === siblingRight) {
-                        newValue = value[1]
-                    }
+            const matchedRule = _rule.find((element, index, array) => {
+                let i = 3
+                while (i--) {
+                    if (current[i] !== element[0][i]) return false
+                }
+                return true
             })
-
-            return newValue
+            
+            return matchedRule[1]
         } 
 
         const createRow = (currentState = []) => {
             if (currentState[0] == null) { 
-                // create random seed
+                // create seed
                 let row = []
-                for (let i = 0; i < 400; i++) {
-                    row.push(randomInt(1))
+                for (let i = 0; i < 99; i++) {
+                    row.push(i == 50 ? 1 : 0) // one point
+                    // row.push(randomInt(1)) // random
                 }
                 return row
             }
@@ -96,15 +97,17 @@
         const ticker = () => {
             state.push(createRow(state))
             render()
-            timer = window.setTimeout(ticker, 3)
+            // timer = window.setTimeout(ticker, 0)
         }
 
         let state = []
 
-        ticker()
+        for (let i = 0; i < 10; i++) {
+            ticker()
+        }
 
         // stop this nonsence
-        setTimeout(() => window.clearTimeout(timer), 10000)
+        // setTimeout(() => window.clearTimeout(timer), 10000)
     </script>
 </body>
 
