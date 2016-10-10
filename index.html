@@ -29,6 +29,8 @@
 
 <body>
     <script>
+        const debug = false
+
         const _rule = [
             [[1,1,1], 0],
             [[1,1,0], 0],
@@ -71,24 +73,26 @@
                 }
                 return true
             })
-            
+
             return matchedRule[1]
-        } 
+        }
 
         const createRow = (currentState = []) => {
-            if (currentState[0] == null) { 
+            if (currentState[0] == null) {
                 // create seed
                 let row = []
                 for (let i = 0; i < 99; i++) {
+                  debug ?
                     row.push(i == 50 ? 1 : 0) // one point
-                    // row.push(randomInt(1)) // random
+                    :
+                    row.push(randomInt(1)) // random
                 }
                 return row
             }
             const lastRowIndex = currentState.length - 1
             return currentState[lastRowIndex].map((value, index, array) => {
-                const sibling1 = array[--index]
-                const sibling2 = array[++index]
+                const sibling1 = array[index - 1]
+                const sibling2 = array[index + 1]
                 return nextGenValue(sibling1, value, sibling2)
             })
         }
