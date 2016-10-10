@@ -101,17 +101,14 @@
         const ticker = () => {
             state.push(createRow(state))
             render()
-            // timer = window.setTimeout(ticker, 0)
+            timer = window.setTimeout(ticker, 0)
         }
 
         let state = []
 
-        for (let i = 0; i < 10; i++) {
-            ticker()
-        }
-
+        ticker()
         // stop this nonsence
-        // setTimeout(() => window.clearTimeout(timer), 10000)
+        setTimeout(() => window.clearTimeout(timer), 2000)
     </script>
 </body>
 
